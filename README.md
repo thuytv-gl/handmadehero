@@ -4,13 +4,10 @@
 ----------------------------
         MY SYSTEM
 ----------------------------
-OS              : Manjaro Linux
-Language        : C
-Compiler        : g++
-Graphical Lib   : (SDL2)[https://www.libsdl.org]
+OS              : Windows 10
+Language        : C++
+Compiler        : MSVC (cl.exe)
 ```
-```bash
-Build script
---------------
-$ ./build [--run]
+```cmd
+build
 ```
