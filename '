@@ -1,7 +1,6 @@
 #include "handmade.h"
 
 static char running = 1;
-static DWORD color = WHITENESS;
 
 LRESULT CALLBACK
 MainWindowCallback(
@@ -30,24 +29,6 @@ MainWindowCallback(
         {
             OutputDebugStringA("WM_ACTIVATEAPP\n");
         } break;
-        case WM_PAINT: 
-        {
-            OutputDebugStringA("WM_PAINT\n");
-            PAINTSTRUCT Paint;
-            HDC DeviceContext = BeginPaint(Window, &Paint);
-            int x = Paint.rcPaint.left;
-            int y = Paint.rcPaint.top;
-            int w = Paint.rcPaint.right - Paint.rcPaint.left;
-            int h = Paint.rcPaint.bottom - Paint.rcPaint.top;
-            PatBlt(DeviceContext, x, y, w, h, color);
-            EndPaint(Window, &Paint);
-            if (color == WHITENESS) {
-                color = BLACKNESS;
-            }
-            else {
-                color = WHITENESS;
-            }
-        } break;
         default:
         {
             Result = DefWindowProc(Window, Message, WParam, LParam);
@@ -71,8 +52,7 @@ WinMain(
     // WindowClass.hIcon;
     WindowClass.lpszClassName = "HandmadeHeroWindowClass";
 
-    if(RegisterClass(&WindowClass))
-    {
+    if(RegisterClass(&WindowClass)) {
         HWND WindowHandle = CreateWindowExA(
                 0,
                 WindowClass.lpszClassName,
@@ -80,27 +60,14 @@ WinMain(
                 WS_OVERLAPPEDWINDOW|WS_VISIBLE,
                 CW_USEDEFAULT,
                 CW_USEDEFAULT,
-                CW_USEDEFAULT,
-                CW_USEDEFAULT,
+                1080,
+                720,
                 0,
                 0,
                 hInstance,
                 0);
-        if (WindowHandle)
-        {
-            MSG Message;
-            while(running) {
-                BOOL MessageResult = GetMessage(&Message, 0, 0, 0);
-                if (MessageResult > 0)
-                {
-                    TranslateMessage(&Message);
-                    DispatchMessage(&Message);
-                } else break;
-            }
-        } else {
-            // TODO(thuytv): logging
+        while(running) {
         }
-
     } else {
         // TODO(thuytv): logging
     }
